@@ -85,9 +85,9 @@ func CreateDbClient() *gorm.DB {
 	//}), &gorm.Config{
 	//	Logger: logger.Default.LogMode(logger.Info),
 	//})
-	//if err != nil {
-	//	panic(err)
-	//}
+	if err != nil {
+		panic(err)
+	}
 
 	sqlDB, err := db.DB()
 	if err != nil {
