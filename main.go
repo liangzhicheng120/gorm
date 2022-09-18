@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm/model"
+	"time"
 )
 
 /*
@@ -56,28 +58,82 @@ import (
 
 func main() {
 	dbClient := CreateDbClient()
-	if err := dbClient.Model(&model.UserTab{}).Create(&model.UserTab{
+	db := dbClient.Model(&model.UserTab{}).Create(&model.UserTab{
 		Name:  "lzc",
 		Age:   10,
 		Email: "7758258@qq.com",
-	}).Error; err != nil {
+	})
+	if err := db.Error; err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println(db.RowsAffected)
 }
 
 func CreateDbClient() *gorm.DB {
+
+	//dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	//db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN: "root:123456@tcp(127.0.0.1:3306)/learn_gorm_db?" +
 			"charset=utf8&parseTime=True&loc=Local", // DSN data source name
-		DefaultStringSize:         256,   // string 类型字段的默认长度
+		DefaultStringSize:         256,   // string 类型字段的默认长度，默认情况下，对于没有大小、没有主键、没有定义索引且没有默认值的字段，将使用db类型“longtext”
 		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
 		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
 		SkipInitializeWithVersion: false, // 根据当前 MySQL 版本自动配置
-	}), &gorm.Config{})
-
+	}), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		panic(err)
 	}
+
+	sqlDB, err := db.DB()
+	if err != nil {
+		panic(err)
+	}
+
+	// Ping
+	err = sqlDB.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	// Close
+	//err = sqlDB.Close()
+	//if err != nil {
+	//	panic(err)
+	//}
+
+	// 返回数据库统计信息
+	sqlDB.Stats()
+	fmt.Printf("%+v", sqlDB.Stats())
+
+	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
+	sqlDB.SetMaxIdleConns(10)
+
+	// SetMaxOpenConns 设置打开数据库连接的最大数量。
+	sqlDB.SetMaxOpenConns(100)
+
+	// SetConnMaxLifetime 设置了连接可复用的最大时间。
+	sqlDB.SetConnMaxLifetime(time.Hour)
+
+	//PostgreSQL
+	//dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+	//db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	//SQLite
+	//db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
+
+	//SQL Server
+	//dsn := "sqlserver://gorm:LoremIpsum86@localhost:9930?database=gorm"
+	//db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+
+	//Clickhouse
+	//dsn := "tcp://localhost:9000?database=gorm&username=gorm&password=gorm&read_timeout=10&write_timeout=20"
+	//db, err := gorm.Open(clickhouse.Open(dsn), &gorm.Config{})
+
 	return db
 }
