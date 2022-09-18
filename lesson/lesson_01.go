@@ -89,6 +89,11 @@ func CreateDbClient() *gorm.DB {
 		panic(err)
 	}
 
+	//err = db.AutoMigrate(&model.UserTab{})
+	//if err != nil {
+	//	panic(err)
+	//}
+
 	sqlDB, err := db.DB()
 	if err != nil {
 		panic(err)
