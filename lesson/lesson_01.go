@@ -72,6 +72,9 @@ func CreateDbClient() *gorm.DB {
 
 	dsn := "root:123456@tcp(127.0.0.1:3306)/learn_gorm_db?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
 
 	//db, err := gorm.Open(mysql.New(mysql.Config{
 	//	DSN: "root:123456@tcp(127.0.0.1:3306)/learn_gorm_db?" +
