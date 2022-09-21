@@ -52,7 +52,7 @@ import (
 
 // Constant matcher factory methods
 
-func main() {
+func main1() {
 	dbClient := CreateDbClient()
 	db := dbClient.Model(&model.UserTab{}).Create(&model.UserTab{
 		Name:  "lzc",
