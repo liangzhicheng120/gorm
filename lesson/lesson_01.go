@@ -57,11 +57,12 @@ import (
 
 func main() {
 	dbClient := CreateDbClient()
-	db := dbClient.Model(&model.UserTab{}).Create(&model.UserTab{
+	userTab := model.UserTab{
 		Name:  "lzc",
 		Age:   10,
 		Email: "7758258@qq.com",
-	})
+	}
+	db := dbClient.Create(&userTab)
 	if err := db.Error; err != nil {
 		fmt.Println(err)
 	}
