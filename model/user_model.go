@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"time"
 )
 
@@ -52,15 +53,15 @@ import (
 // Constant matcher factory methods
 
 type UserTab struct {
-	ID           int64     `json:"id" gorm:"column:id"`
-	Name         string    `json:"name" gorm:"column:name"`
-	Age          uint      `json:"age" gorm:"column:age"`
-	Email        string    `json:"email" gorm:"column:email"`
-	IsDel        uint8     `json:"is_del" gorm:"column:is_del"`
-	CreateTime   uint      `json:"create_time" gorm:"column:create_time"`
-	UpdateTime   uint      `json:"update_time" gorm:"column:update_time"`
-	Birthday     time.Time `json:"birthday" gorm:"column:birthday"`
-	MemberNumber string    `json:"member_number" gorm:"column:member_number"`
+	ID           int64          `json:"id" gorm:"column:id"`
+	Name         string         `json:"name" gorm:"column:name"`
+	Age          uint           `json:"age" gorm:"column:age"`
+	Email        string         `json:"email" gorm:"column:email"`
+	IsDel        uint8          `json:"is_del" gorm:"column:is_del"`
+	CreateTime   uint           `json:"create_time" gorm:"column:create_time"`
+	UpdateTime   uint           `json:"update_time" gorm:"column:update_time"`
+	Birthday     *time.Time     `json:"birthday" gorm:"column:birthday"`
+	MemberNumber sql.NullString `json:"member_number" gorm:"column:member_number"`
 }
 
 func (m *UserTab) TableName() string {
