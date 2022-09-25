@@ -56,7 +56,7 @@ func main() {
 	// INSERT INTO `user_tab` (`name`,`age`,`email`,`is_del`,`create_time`,`update_time`,`birthday`,`member_number`)
 	// VALUES ('lzc',0,'',0,0,0,NULL,NULL)
 	dbClient := CreateDbClient()
-	user := model.UserTab{Name: "lzc", Age: 10}
+	user := model.UserTab{ID: 1, Name: "lzc", Age: 11, Email: "123456@qq.com"}
 	result := dbClient.Create(&user)
 	err := result.Error
 	rowsAffected := result.RowsAffected
@@ -69,7 +69,7 @@ func main() {
 	// INSERT INTO `user_tab` (`name`,`age`) VALUES ('lzc',10)
 	//dbClient.Select("Name", "Age").Create(&user)
 
-	// 创建一个记录且一同忽略传递给略去的字段值
+	// 创建一个记录,忽略name , age
 	//dbClient.Omit("Name", "Age").Create(&user)
 
 	// 批量插入
@@ -80,7 +80,7 @@ func main() {
 	// 数量为 100
 	//dbClient.CreateInBatches(users, 100)
 
-	//	跳过钩子方法
+	// 跳过钩子方法
 	//dbClient.Session(&gorm.Session{SkipHooks: true}).Create(&user)
 
 	// 根据Map创建
@@ -95,16 +95,16 @@ func main() {
 	//dbClient.Clauses(clause.OnConflict{
 	//	Columns:   []clause.Column{{Name: "id"}},
 	//	DoUpdates: clause.AssignmentColumns([]string{"name", "age"}),
-	//}).Create(&users)
+	//}).Create(&user)
 
 	// 在冲突时，更新除主键以外的所有列到新值。
 	//dbClient.Clauses(clause.OnConflict{
 	//	UpdateAll: true,
-	//}).Create(&users)
+	//}).Create(&user)
 
 	// 在冲突时，使用SQL语句
 	//dbClient.Clauses(clause.OnConflict{
 	//	Columns:   []clause.Column{{Name: "id"}},
-	//	DoUpdates: clause.Assignments(map[string]interface{}{"email": gorm.Expr("select email from user_tab limit 1")}),
-	//}).Create(&users)
+	//	DoUpdates: clause.Assignments(map[string]interface{}{"email": gorm.Expr("(select email from user1_tab limit 1)")}),
+	//}).Create(&user)
 }
