@@ -1,10 +1,7 @@
 package model
 
 import (
-	"crypto"
 	"database/sql"
-	"encoding/hex"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -71,10 +68,10 @@ func (u *UserTab) TableName() string {
 	return "user_tab"
 }
 
-func (u *UserTab) BeforeCreate(tx *gorm.DB) (err error) {
-	md5 := crypto.MD5.New()
-	md5.Write([]byte(u.Email))
-	u.Email = hex.EncodeToString(md5.Sum(nil))
-	u.IsDel = 0
-	return
-}
+//func (u *UserTab) BeforeCreate(tx *gorm.DB) (err error) {
+//	md5 := crypto.MD5.New()
+//	md5.Write([]byte(u.Email))
+//	u.Email = hex.EncodeToString(md5.Sum(nil))
+//	u.IsDel = 0
+//	return
+//}
