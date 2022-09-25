@@ -56,7 +56,7 @@ import (
 
 // Constant matcher factory methods
 
-func main() {
+func main1() {
 	dbClient := CreateDbClient()
 	userTab := model.UserTab{
 		Name:  "lzc",
@@ -94,10 +94,10 @@ func CreateDbClient() *gorm.DB {
 		panic(err)
 	}
 
-	err = db.AutoMigrate(&model.UserTab{})
-	if err != nil {
-		panic(err)
-	}
+	//err = db.AutoMigrate(&model.UserTab{})
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	sqlDB, err := db.DB()
 	if err != nil {

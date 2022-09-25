@@ -64,6 +64,13 @@ type UserTab struct {
 	MemberNumber sql.NullString `json:"member_number" gorm:"column:member_number"`
 }
 
-func (m *UserTab) TableName() string {
+func (u *UserTab) TableName() string {
 	return "user_tab"
 }
+
+//func (u *UserTab) BeforeCreate(tx *gorm.DB) (err error) {
+//	md5 := crypto.MD5.New()
+//	md5.Write([]byte(u.Email))
+//	u.Email = hex.EncodeToString(md5.Sum(nil))
+//	return
+//}

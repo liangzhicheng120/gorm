@@ -52,15 +52,59 @@ import (
 
 // Constant matcher factory methods
 
-func main1() {
+func main() {
+	// INSERT INTO `user_tab` (`name`,`age`,`email`,`is_del`,`create_time`,`update_time`,`birthday`,`member_number`)
+	// VALUES ('lzc',0,'',0,0,0,NULL,NULL)
 	dbClient := CreateDbClient()
-	db := dbClient.Model(&model.UserTab{}).Create(&model.UserTab{
-		Name:  "lzc",
-		Age:   10,
-		Email: "7758258@qq.com",
-	})
-	if err := db.Error; err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(db.RowsAffected)
+	user := model.UserTab{Name: "lzc", Age: 10}
+	result := dbClient.Create(&user)
+	err := result.Error
+	rowsAffected := result.RowsAffected
+	id := user.ID
+	fmt.Println(err)
+	fmt.Println(rowsAffected)
+	fmt.Println(id)
+
+	// 创建记录并更新给出的字段
+	// INSERT INTO `user_tab` (`name`,`age`) VALUES ('lzc',10)
+	//dbClient.Select("Name", "Age").Create(&user)
+
+	// 创建一个记录且一同忽略传递给略去的字段值
+	//dbClient.Omit("Name", "Age").Create(&user)
+
+	// 批量插入
+	//var users = []model.UserTab{{Name: "lzc1"}, {Name: "lzc2"}, {Name: "lzc3"}}
+	//dbClient.Create(&users)
+
+	// 使用 CreateInBatches 分批创建时，可以指定每批的数量
+	// 数量为 100
+	//dbClient.CreateInBatches(users, 100)
+
+	//	跳过钩子方法
+	//dbClient.Session(&gorm.Session{SkipHooks: true}).Create(&user)
+
+	// 根据Map创建
+	//dbClient.Model(&model.UserTab{}).Create(map[string]interface{}{
+	//	"Name": "lzc", "Age": 18,
+	//})
+
+	// 在冲突时，什么都不做
+	//dbClient.Clauses(clause.OnConflict{DoNothing: true}).Create(&user)
+
+	// 在冲突时，将列更新为新值
+	//dbClient.Clauses(clause.OnConflict{
+	//	Columns:   []clause.Column{{Name: "id"}},
+	//	DoUpdates: clause.AssignmentColumns([]string{"name", "age"}),
+	//}).Create(&users)
+
+	// 在冲突时，更新除主键以外的所有列到新值。
+	//dbClient.Clauses(clause.OnConflict{
+	//	UpdateAll: true,
+	//}).Create(&users)
+
+	// 在冲突时，使用SQL语句
+	//dbClient.Clauses(clause.OnConflict{
+	//	Columns:   []clause.Column{{Name: "id"}},
+	//	DoUpdates: clause.Assignments(map[string]interface{}{"email": gorm.Expr("select email from user_tab limit 1")}),
+	//}).Create(&users)
 }
