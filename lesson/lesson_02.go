@@ -56,7 +56,7 @@ func main() {
 	// INSERT INTO `user_tab` (`name`,`age`,`email`,`is_del`,`create_time`,`update_time`,`birthday`,`member_number`)
 	// VALUES ('lzc',0,'',0,0,0,NULL,NULL)
 	dbClient := CreateDbClient()
-	user := model.UserTab{ID: 1, Name: "lzc", Age: 11, Email: "123456@qq.com"}
+	user := model.UserTab{Name: "lzc", Age: 11, Email: "123456@qq.com"}
 	result := dbClient.Create(&user)
 	err := result.Error
 	rowsAffected := result.RowsAffected
