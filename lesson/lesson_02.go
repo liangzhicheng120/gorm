@@ -56,7 +56,7 @@ func main() {
 	// INSERT INTO `user_tab` (`name`,`age`,`email`,`is_del`,`create_time`,`update_time`,`birthday`,`member_number`)
 	// VALUES ('lzc',0,'',0,0,0,NULL,NULL)
 	dbClient := CreateDbClient()
-	user := model.UserTab{Name: "lzc", Age: 11, Email: "123456@qq.com"}
+	user := model.UserTab{ID: 1, Name: "lzc12", Age: 15, Email: "1234567@qq.com"}
 	result := dbClient.Create(&user)
 	err := result.Error
 	rowsAffected := result.RowsAffected
@@ -66,7 +66,6 @@ func main() {
 	fmt.Println(id)
 
 	// 创建记录并更新给出的字段
-	// INSERT INTO `user_tab` (`name`,`age`) VALUES ('lzc',10)
 	//dbClient.Select("Name", "Age").Create(&user)
 
 	// 创建一个记录,忽略name , age
@@ -77,15 +76,16 @@ func main() {
 	//dbClient.Create(&users)
 
 	// 使用 CreateInBatches 分批创建时，可以指定每批的数量
-	// 数量为 100
-	//dbClient.CreateInBatches(users, 100)
+	// 数量为 2
+	//dbClient.CreateInBatches(users, 2)
 
 	// 跳过钩子方法
 	//dbClient.Session(&gorm.Session{SkipHooks: true}).Create(&user)
 
 	// 根据Map创建
 	//dbClient.Model(&model.UserTab{}).Create(map[string]interface{}{
-	//	"Name": "lzc", "Age": 18,
+	//	"Name": "lzc",
+	//	"Age": 18,
 	//})
 
 	// 在冲突时，什么都不做
