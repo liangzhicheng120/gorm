@@ -75,3 +75,17 @@ func (u *UserTab) TableName() string {
 //	u.IsDel = 0
 //	return
 //}
+
+//func (u *UserTab) BeforeUpdate(tx *gorm.DB) (err error) {
+//	// 如果邮箱地址有变化，返回错误
+//	if tx.Statement.Changed("Email") {
+//		return errors.New("email not allowed to change")
+//	}
+//
+//	// 如果任意字段有变更，设置更新时间
+//	if tx.Statement.Changed() {
+//		tx.Statement.SetColumn("UpdateTime", time.Now().Unix())
+//	}
+//
+//	return nil
+//}

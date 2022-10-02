@@ -52,7 +52,7 @@ import (
 
 // Constant matcher factory methods
 
-func main() {
+func main2() {
 	// INSERT INTO `user_tab` (`name`,`age`,`email`,`is_del`,`create_time`,`update_time`,`birthday`,`member_number`)
 	// VALUES ('lzc',0,'',0,0,0,NULL,NULL)
 	dbClient := CreateDbClient()
