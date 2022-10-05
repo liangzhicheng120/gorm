@@ -5,7 +5,7 @@ import (
 	"gorm/model"
 )
 
-func main() {
+func main3() {
 	dbClient := CreateDbClient()
 
 	// GORM 提供了 First、Take、Last 方法，从数据库中检索单个对象。
