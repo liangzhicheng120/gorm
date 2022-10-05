@@ -14,13 +14,13 @@ func main() {
 	// 如果 model 没有定义主键，那么将按 model 的第一个字段进行排序
 
 	// 获取第一条记录（主键升序）
-	// SELECT * FROM user_tab ORDER BY id LIMIT 1;
-	//dbClient.First(&model.UserTab{})
-	//
-	//// 获取一条记录，没有指定排序字段
-	//// SELECT * FROM user_tab LIMIT 1;
-	//dbClient.Take(&model.UserTab{})
-	//
+	//SELECT * FROM user_tab ORDER BY id LIMIT 1;
+	dbClient.First(&model.UserTab{})
+
+	// 获取一条记录，没有指定排序字段
+	// SELECT * FROM user_tab LIMIT 1;
+	dbClient.Take(&model.UserTab{})
+
 	//// 获取最后一条记录（主键降序）
 	//// SELECT * FROM user_tab ORDER BY id DESC LIMIT 1;
 	//dbClient.Last(&model.UserTab{})
@@ -43,7 +43,7 @@ func main() {
 	//dbClient.Find(&result, "name = ? and is_del = ?", "lzc", 0)
 	//
 	//// not 查询
-	var users []model.UserTab
+	//var users []model.UserTab
 	//dbClient.Not("name = ?", "lzc").Find(&users)
 	//
 	//// not in 查询
@@ -78,20 +78,20 @@ func main() {
 	// union , union 联合查询
 	// 注意，union 会将查询到的记录去重合并，union all 直接合并不去重
 
-	dbClient.Table("( ? union ? ) as u",
-		dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
-		dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
-	).Find(&users)
-
-	dbClient.Raw("? union ?",
-		dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
-		dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
-	).Find(&users)
-
-	dbClient.Raw("? union all ?",
-		dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
-		dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
-	).Find(&users)
+	//dbClient.Table("( ? union ? ) as u",
+	//	dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
+	//	dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
+	//).Find(&users)
+	//
+	//dbClient.Raw("? union ?",
+	//	dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
+	//	dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
+	//).Find(&users)
+	//
+	//dbClient.Raw("? union all ?",
+	//	dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
+	//	dbClient.Model(&model.UserTab{}).Where("id = ?", 1),
+	//).Find(&users)
 
 }
 
