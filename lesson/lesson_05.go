@@ -6,7 +6,7 @@ import (
 	"gorm/model"
 )
 
-func main() {
+func main5() {
 	dbClient := CreateDbClient()
 
 	// 如果在没有任何条件的情况下执行批量删除，GORM 不会执行该操作，并返回 ErrMissingWhereClause 错误
