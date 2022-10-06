@@ -2,7 +2,7 @@ package model
 
 import (
 	"database/sql"
-	"gorm.io/gorm"
+	"gorm.io/plugin/soft_delete"
 	"time"
 )
 
@@ -59,11 +59,11 @@ type UserTab struct {
 	Age   uint   `json:"age" gorm:"column:age"`
 	Email string `json:"email" gorm:"column:email"`
 	//IsDel uint8  `json:"is_del" gorm:"column:is_del"`
-	//IsDel soft_delete.DeletedAt `json:"is_del" gorm:"softDelete:flag"`
+	IsDel soft_delete.DeletedAt `json:"is_del" gorm:"softDelete:flag"`
 
-	CreateTime   uint           `json:"create_time" gorm:"column:create_time"`
-	UpdateTime   uint           `json:"update_time" gorm:"column:update_time"`
-	DeleteAt     gorm.DeletedAt `json:"delete_at" gorm:"column:delete_at"`
+	CreateTime uint `json:"create_time" gorm:"column:create_time"`
+	UpdateTime uint `json:"update_time" gorm:"column:update_time"`
+	//DeleteAt     gorm.DeletedAt `json:"delete_at" gorm:"column:delete_at"`
 	Birthday     *time.Time     `json:"birthday" gorm:"column:birthday"`
 	MemberNumber sql.NullString `json:"member_number" gorm:"column:member_number"`
 }
