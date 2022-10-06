@@ -11,5 +11,7 @@ create table learn_gorm_db.user_tab
     create_time   int unsigned        null,
     update_time   int unsigned        null,
     birthday      timestamp(6) default CURRENT_TIMESTAMP(6) on update CURRENT_TIMESTAMP(6),
-    member_number varchar(100)
+    member_number varchar(100),
+    delete_at     timestamp(6)        null
+
 );
